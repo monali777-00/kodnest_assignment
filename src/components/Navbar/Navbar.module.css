@@ -117,12 +117,25 @@
 
 /* Mobile responsive navigation styles */
 @media (max-width: 900px) {
-  .navLinks {
-    display: none;
+  .navLinks{
+    flex-direction: column;
+    gap: 16px;
   }
+
+  .showMenu {
+    display: block !important;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: white;
+    z-index: 1000;
+  }
+
   .ctaContainer {
     display: none;
   }
+  
   .hamburger {
     display: block;
   }
