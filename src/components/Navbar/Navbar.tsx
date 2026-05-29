@@ -1,9 +1,13 @@
 'use client';
 
-import React from 'react';
+import React, { useState }
+from 'react';
 import styles from './Navbar.module.css';
 
 export default function Navbar() {
+    const [menuOpen,
+      setMenuOpen] = 
+      useState(false);
   return (
     <header className={styles.header}>
       <div className={styles.container}>
@@ -27,7 +31,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        <nav>
+        <nav className = {menuOpen ? styles.showMenu : ''}>
           <ul className={styles.navLinks}>
             <li className={`${styles.navItem} ${styles.activeNavItem}`}>Internships</li>
             <li className={styles.navItem}>Jobs</li>
@@ -41,7 +45,8 @@ export default function Navbar() {
           <button className={styles.registerBtn}>Register</button>
         </div>
 
-        <button className={styles.hamburger} aria-label="Toggle Menu">
+        <button className={styles.hamburger} aria-label="Toggle Menu"
+        onClick={() => setMenuOpen(!menuOpen)}>
           <svg
             width="24"
             height="24"

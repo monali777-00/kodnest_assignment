@@ -1,34 +1,25 @@
 # Internshala Internship Search Replica
 
-A production-grade web application replicating Internshala's internship search page. Built as part of the SDE (Web) Internship assignment.
+A clean, responsive, and functional frontend replica of Internshala's internship search page. This application fetches live internship data and provides instant client-side filtering.
+
+## What this project is about
+
+This project is a replica of the Internshala internship search page. It connects to the live Internshala search API to display real-time internship listings, letting users browse, search, filter, and apply for roles in a clean, modern user interface.
+
+What has been done:
+- **Live API Integration**: Integrated a server-side proxy route to pull live data directly from `https://internshala.com/hiring/search` without encountering client-side CORS issues.
+- **Dynamic Frontend Filtering**: Built filtering controls that update listings instantly on the client side:
+  - **Profile & Location**: Filters dynamically built based on the available listings.
+  - **Stipend Slider**: Real-time slider to filter by minimum stipend value.
+  - **Duration Filter**: Limits results based on internship length (in months).
+  - **Special Filters**: Quick checkboxes for Work From Home (WFH), Part-time, and Job Offers (PPO).
+- **Slide-out Detail Drawer**: Clicking any internship card opens a side-drawer showing complete details, requirements, and a mock application form with validation.
+- **Responsive Layout**: Designed from scratch using Vanilla CSS Modules for fully responsive layouts (mobile, tablet, and desktop) and smooth transitions.
 
 ## Tech Stack
-- **Framework**: [Next.js 14](https://nextjs.org/) (App Router, Server-side Rendering)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **Styling**: [Vanilla CSS Modules](https://nextjs.org/docs/app/building-your-application/styling/css-modules) (Clean, encapsulated, and tailored styles without third-party design frameworks)
-
----
-
-## Key Features
-
-1. **Live API Fetching & Proxying**
-   - Fetches live data from `https://internshala.com/hiring/search`.
-   - Utilizes Next.js Server Route Handler (`src/app/api/internships/route.ts`) to act as an API proxy. This bypasses client-side **CORS restrictions** seamlessly and handles server caching.
-
-2. **Advanced Frontend Filtering**
-   - **Profile filter**: Dynamically populated from available jobs.
-   - **Location filter**: Dynamically populated locations + dedicated "Work from home" filter.
-   - **Duration filter**: Allows filtering internships based on maximum length in months.
-   - **Stipend slider**: Real-time filtering based on minimum stipend value.
-   - **Special checkboxes**: Checkboxes to filter for Remote (Work From Home), Part-time status, and Job Offer (PPO).
-
-3. **Detailed Slide-out Modal Drawer**
-   - Allows users to click on any internship card to open a details drawer.
-   - Displays key info, dynamically generated responsibilities/skills matching the job profile, and a mock **Apply Form** with validation.
-
-4. **Premium Responsive Design**
-   - Fully optimized for desktop, tablet, and mobile browsers using fluid flex/grid layouts.
-   - Smooth state transitions, hover animations, and elegant typography (Google Inter).
+- **Framework**: Next.js 14 (App Router)
+- **Language**: TypeScript
+- **Styling**: Vanilla CSS Modules
 
 ---
 
