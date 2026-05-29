@@ -22,6 +22,7 @@ export default function Home() {
   } = useInternships();
 
   const [selectedInternship, setSelectedInternship] = useState<Internship | null>(null);
+  const [isFilterMobileOpen, setIsFilterMobileOpen] = useState(false);
 
   const handleViewDetails = (internship: Internship) => {
     setSelectedInternship(internship);
@@ -38,14 +39,25 @@ export default function Home() {
       <main className={styles.main}>
         <div className="container">
           <div className={styles.layoutContainer}>
+            {/* Backdrop for mobile filters drawer */}
+            {isFilterMobileOpen && (
+              <div
+                className={styles.filterBackdrop}
+                onClick={() => setIsFilterMobileOpen(false)}
+              />
+            )}
+
             {/* Left Sidebar Filter Section */}
-            <FilterSidebar
-              filters={filters}
-              profiles={profiles}
-              locations={locations}
-              updateFilter={updateFilter}
-              resetFilters={resetFilters}
-            />
+            <div className={`${styles.sidebarWrapper} ${isFilterMobileOpen ? styles.showMobileFilters : ''}`}>
+              <FilterSidebar
+                filters={filters}
+                profiles={profiles}
+                locations={locations}
+                updateFilter={updateFilter}
+                resetFilters={resetFilters}
+                onClose={() => setIsFilterMobileOpen(false)}
+              />
+            </div>
 
             {/* Right Listings Section */}
             <div className={styles.resultsColumn}>
@@ -68,13 +80,34 @@ export default function Home() {
 
               {!loading && !error && (
                 <>
-                  <h3 className={styles.statsHeader}>
-                    {filteredInternships.length}{' '}
-                    <span className={styles.statsCount}>
-                      {filteredInternships.length === 1 ? 'internship' : 'internships'}
-                    </span>{' '}
-                    matching your criteria
-                  </h3>
+                  <div className={styles.resultsHeaderRow}>
+                    <h3 className={styles.statsHeader}>
+                      {filteredInternships.length}{' '}
+                      <span className={styles.statsCount}>
+                        {filteredInternships.length === 1 ? 'internship' : 'internships'}
+                      </span>{' '}
+                      matching your criteria
+                    </h3>
+
+                    <button
+                      className={styles.mobileFilterToggleBtn}
+                      onClick={() => setIsFilterMobileOpen(true)}
+                    >
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+                      </svg>
+                      Filters
+                    </button>
+                  </div>
 
                   {filteredInternships.length > 0 ? (
                     filteredInternships.map((internship) => (

@@ -9,6 +9,7 @@ interface FilterSidebarProps {
   locations: string[];
   updateFilter: <K extends keyof FilterState>(key: K, value: FilterState[K]) => void;
   resetFilters: () => void;
+  onClose?: () => void;
 }
 
 export default function FilterSidebar({
@@ -17,6 +18,7 @@ export default function FilterSidebar({
   locations,
   updateFilter,
   resetFilters,
+  onClose,
 }: FilterSidebarProps) {
   return (
     <aside className={styles.sidebar}>
@@ -37,9 +39,19 @@ export default function FilterSidebar({
           </svg>
           Filters
         </h3>
-        <button className={styles.clearBtn} onClick={resetFilters}>
-          Clear All
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <button className={styles.clearBtn} onClick={resetFilters}>
+            Clear All
+          </button>
+          {onClose && (
+            <button className={styles.closeBtn} onClick={onClose} aria-label="Close filters">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+          )}
+        </div>
       </div>
 
       <div className={styles.filterGroup}>

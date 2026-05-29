@@ -31,13 +31,17 @@ export default function Navbar() {
           </div>
         </div>
 
-        <nav className = {menuOpen ? styles.showMenu : ''}>
+        <nav className={menuOpen ? styles.showMenu : ''}>
           <ul className={styles.navLinks}>
             <li className={`${styles.navItem} ${styles.activeNavItem}`}>Internships</li>
             <li className={styles.navItem}>Jobs</li>
             <li className={styles.navItem}>Post Resume</li>
             <li className={styles.navItem}>Courses</li>
           </ul>
+          <div className={styles.mobileCta}>
+            <button className={styles.loginBtn}>Login</button>
+            <button className={styles.registerBtn}>Register</button>
+          </div>
         </nav>
 
         <div className={styles.ctaContainer}>
