@@ -4,14 +4,23 @@ import React, { useState }
 from 'react';
 import styles from './Navbar.module.css';
 
-export default function Navbar() {
-    const [menuOpen,
-      setMenuOpen] 
-      = useState(false);
+interface NavbarProps {
+  activeTab: string;
+  onChangeTab: (tab: string) => void;
+}
+
+export default function Navbar({ activeTab, onChangeTab }: NavbarProps) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleTabClick = (tab: string) => {
+    onChangeTab(tab);
+    setMenuOpen(false);
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        <div className={styles.logoContainer}>
+        <div className={styles.logoContainer} onClick={() => handleTabClick('internships')}>
           <svg
             className={styles.logoIcon}
             width="28"
@@ -33,10 +42,30 @@ export default function Navbar() {
 
         <nav className={menuOpen ? styles.showMenu : ''}>
           <ul className={styles.navLinks}>
-            <li className={`${styles.navItem} ${styles.activeNavItem}`}>Internships</li>
-            <li className={styles.navItem}>Jobs</li>
-            <li className={styles.navItem}>Post Resume</li>
-            <li className={styles.navItem}>Courses</li>
+            <li
+              className={`${styles.navItem} ${activeTab === 'internships' ? styles.activeNavItem : ''}`}
+              onClick={() => handleTabClick('internships')}
+            >
+              Internships
+            </li>
+            <li
+              className={`${styles.navItem} ${activeTab === 'jobs' ? styles.activeNavItem : ''}`}
+              onClick={() => handleTabClick('jobs')}
+            >
+              Jobs
+            </li>
+            <li
+              className={`${styles.navItem} ${activeTab === 'post-resume' ? styles.activeNavItem : ''}`}
+              onClick={() => handleTabClick('post-resume')}
+            >
+              Post Resume
+            </li>
+            <li
+              className={`${styles.navItem} ${activeTab === 'courses' ? styles.activeNavItem : ''}`}
+              onClick={() => handleTabClick('courses')}
+            >
+              Courses
+            </li>
           </ul>
           <div className={styles.mobileCta}>
             <button className={styles.loginBtn}>Login</button>

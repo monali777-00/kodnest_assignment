@@ -10,6 +10,7 @@ const initialFilters: FilterState = {
   ppo: false,
   duration: null,
   minStipend: 0,
+  experience: '',
 };
 
 export function useInternships() {
@@ -17,6 +18,7 @@ export function useInternships() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [filters, setFilters] = useState<FilterState>(initialFilters);
+  const [activeTab, setActiveTab] = useState<string>('internships');
 
   useEffect(() => {
     async function fetchData() {
@@ -31,7 +33,30 @@ export function useInternships() {
         // Convert map of internships to array using internship_ids for ordering
         const list = data.internship_ids
           .map(id => data.internships_meta[id])
-          .filter(Boolean);
+          .filter(Boolean)
+          .map((item, index) => {
+            // Dynamically convert every 3rd item to a job for demonstration of the Jobs tab
+            if (index % 3 === 0) {
+              const experienceYears = (index % 4) + 1; // 1, 2, 3, or 4 years
+              return {
+                ...item,
+                employment_type: 'job',
+                experience: `${experienceYears} ${experienceYears === 1 ? 'Year' : 'Years'}`,
+                job_experience: experienceYears,
+                title: item.title
+                  .replace(/internship/i, 'Engineer')
+                  .replace(/intern/i, 'Developer')
+                  .replace(/web development/i, 'Web Developer')
+                  .replace(/software development/i, 'Software Engineer'),
+                stipend: {
+                  ...item.stipend,
+                  salary: `₹ ${((experienceYears + 2) * 1.5).toFixed(1)} - ${((experienceYears + 4) * 2.0).toFixed(1)} LPA`,
+                  salaryValue1: (experienceYears + 2) * 15000,
+                }
+              } as unknown as Internship;
+            }
+            return item;
+          });
         
         setInternships(list);
       } catch (err: any) {
@@ -64,6 +89,19 @@ export function useInternships() {
   // Filtered list computed efficiently on state changes
   const filteredInternships = useMemo(() => {
     return internships.filter(item => {
+      // 0. Filter by active tab (Internships vs Jobs)
+      const isJob = item.employment_type === 'job';
+      if (activeTab === 'internships' && isJob) {
+        return false;
+      }
+      if (activeTab === 'jobs' && !isJob) {
+        return false;
+      }
+      if (activeTab !== 'internships' && activeTab !== 'jobs') {
+        // Safe placeholder for other tabs like 'courses' or 'post-resume'
+        return false;
+      }
+
       // 1. Profile filter
       if (filters.profile && item.profile_name !== filters.profile) {
         return false;
@@ -115,9 +153,19 @@ export function useInternships() {
         return false;
       }
 
+      // 8. Years of Experience filter (only applies to Jobs tab)
+      if (activeTab === 'jobs' && filters.experience) {
+        const requiredExp = item.job_experience || (item.experience ? parseInt(item.experience, 10) : 0);
+        const userExpLimit = parseInt(filters.experience, 10);
+        // If job requires more experience than user selected, exclude it
+        if (requiredExp > userExpLimit) {
+          return false;
+        }
+      }
+
       return true;
     });
-  }, [internships, filters]);
+  }, [internships, filters, activeTab]);
 
   const resetFilters = () => {
     setFilters(initialFilters);
@@ -135,6 +183,8 @@ export function useInternships() {
     loading,
     error,
     filters,
+    activeTab,
+    setActiveTab,
     updateFilter,
     resetFilters,
   };

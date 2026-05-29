@@ -61,4 +61,5 @@ export interface FilterState {
   ppo: boolean;
   duration: number | null; // Max duration in months, or exactly X months. Let's do max or dropdown value.
   minStipend: number;
+  experience: string; // Years of experience: "", "0", "1", "2", "3", "5", etc.
 }
