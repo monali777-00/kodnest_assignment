@@ -10,7 +10,6 @@ interface FilterSidebarProps {
   updateFilter: <K extends keyof FilterState>(key: K, value: FilterState[K]) => void;
   resetFilters: () => void;
   onClose?: () => void;
-  activeTab: string;
 }
 
 export default function FilterSidebar({
@@ -20,7 +19,6 @@ export default function FilterSidebar({
   updateFilter,
   resetFilters,
   onClose,
-  activeTab,
 }: FilterSidebarProps) {
   return (
     <aside className={styles.sidebar}>
@@ -109,48 +107,28 @@ export default function FilterSidebar({
         />
       </div>
 
-      {activeTab === 'internships' ? (
-        <div className={styles.filterGroup}>
-          <label className={styles.label} htmlFor="duration-select">Max Duration (Months)</label>
-          <select
-            id="duration-select"
-            className={styles.select}
-            value={filters.duration || ''}
-            onChange={(e) =>
-              updateFilter(
-                'duration',
-                e.target.value ? parseInt(e.target.value, 10) : null
-              )
-            }
-          >
-            <option value="">Choose Duration</option>
-            <option value="1">1 Month</option>
-            <option value="2">2 Months</option>
-            <option value="3">3 Months</option>
-            <option value="4">4 Months</option>
-            <option value="5">5 Months</option>
-            <option value="6">6 Months</option>
-          </select>
-        </div>
-      ) : (
-        <div className={styles.filterGroup}>
-          <label className={styles.label} htmlFor="experience-select">Years of Experience</label>
-          <select
-            id="experience-select"
-            className={styles.select}
-            value={filters.experience || ''}
-            onChange={(e) => updateFilter('experience', e.target.value)}
-          >
-            <option value="">e.g. 0-5 Years</option>
-            <option value="0">Freshers (0 Years)</option>
-            <option value="1">1 Year</option>
-            <option value="2">2 Years</option>
-            <option value="3">3 Years</option>
-            <option value="4">4 Years</option>
-            <option value="5">5+ Years</option>
-          </select>
-        </div>
-      )}
+      <div className={styles.filterGroup}>
+        <label className={styles.label} htmlFor="duration-select">Max Duration (Months)</label>
+        <select
+          id="duration-select"
+          className={styles.select}
+          value={filters.duration || ''}
+          onChange={(e) =>
+            updateFilter(
+              'duration',
+              e.target.value ? parseInt(e.target.value, 10) : null
+            )
+          }
+        >
+          <option value="">Choose Duration</option>
+          <option value="1">1 Month</option>
+          <option value="2">2 Months</option>
+          <option value="3">3 Months</option>
+          <option value="4">4 Months</option>
+          <option value="5">5 Months</option>
+          <option value="6">6 Months</option>
+        </select>
+      </div>
 
       <div className={styles.checkboxGroup}>
         <label className={styles.checkboxLabel}>
