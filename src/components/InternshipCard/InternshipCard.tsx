@@ -12,8 +12,9 @@ export default function InternshipCard({ internship, onViewDetails }: Internship
   const companyLetter = internship.company_name ? internship.company_name.charAt(0) : 'I';
 
   // Construct logo URL dynamically
+  const logoBaseUrl = process.env.NEXT_PUBLIC_COMPANY_LOGO_BASE_URL || 'https://internshala.com/uploads/logo/images/';
   const logoUrl = internship.company_logo
-    ? `https://internshala.com/uploads/logo/images/${internship.company_logo}`
+    ? `${logoBaseUrl}${internship.company_logo}`
     : null;
 
   return (
