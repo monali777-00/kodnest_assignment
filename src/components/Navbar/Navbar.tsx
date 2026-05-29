@@ -6,8 +6,8 @@ import styles from './Navbar.module.css';
 
 export default function Navbar() {
     const [menuOpen,
-      setMenuOpen] = 
-      useState(false);
+      setMenuOpen] 
+      = useState(false);
   return (
     <header className={styles.header}>
       <div className={styles.container}>
@@ -45,7 +45,8 @@ export default function Navbar() {
           <button className={styles.registerBtn}>Register</button>
         </div>
 
-        <button className={styles.hamburger} aria-label="Toggle Menu"
+        <button className={styles.hamburger} 
+        aria-label="Toggle Menu"
         onClick={() => setMenuOpen(!menuOpen)}>
           <svg
             width="24"
